@@ -1,0 +1,4 @@
+sarufi==0.0.5
+heyoo==0.0.6
+python-dotenv==0.21.0
+flask==2.2.2
