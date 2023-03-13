@@ -4,7 +4,7 @@
 
 Starter code to integrating sarufi with [heyoo](https://github.com/Neurotech-HQ/heyoo)
 
-A blueprint for deploying sarufi chabot on WhatsApp Cloud API. In this blueprint, we shall set up a webhook to receive whatsapp messages. The are several ways you can set up a webhook. I will be showing how to use [ngrok](https://ngrok.com/) and [Replit](https://replit.com/)
+A blueprint for deploying sarufi chabot on WhatsApp Cloud API. In this blueprint, we shall set up a webhook to receive whatsapp messages. The are several ways you can set up a webhook. I will be showing how to use [ngrok](#using-ngrok) and [Replit](#using-replit)
 
 ## Requirements
 
@@ -16,6 +16,7 @@ cd sarufi-python-sdk
 sarufi-python-sdk $ python setup.py install
 ```
 **NOTE:** With replit, you do not need to install sarufi sdk in your machine. You need replit accout
+
 ## YAML CONFIGURATION
 
 Configure yaml to resemble your project details and whatsapp cloud API keys. Read [Getting whatsapp creds](#whatsapp-cloud-creds)
@@ -33,17 +34,17 @@ whatsapp:
 
 ### Whatsapp cloud creds
 
-Navigate to `Whatsapp`-->`Getting started` to get whatsApp cloud `token` and `phone number ID` to be used. You will have access token and phone number id
+Navigate to `Whatsapp`-->`Getting started` to get whatsApp cloud `token` and `phone number ID` to be used. 
+
+You will have access token and phone number id
 
 ![How to get whatsapp token and phone number ID](./img/get_whatsapp_token.png)
-
-
 
 ## SETTING WEBHOOK
 
 ### Using ngrok
 
-Make sure you have installed in your working machine.
+Make sure you have [ngrok](https://ngrok.com/) installed in your working machine.
 
 Once you have configured your YAML file, now you are ready to launch your whatsapp bot
 ```bash
@@ -63,27 +64,27 @@ With the provided url, follow simple steps at [Setting whatsapp webhook](#settin
 
 Open `app.py`, copy the `VERIFY_TOKEN`--> paste into verify token in your whatsapp cloud --> **verify and save**
 
+We are heading a the best part of this journey. Just take time to [subscribe to message topic](#webhook-field-subscription).
+When done ,you are good to go... fire up your bot in whatsapp by sending text.
+
 When done with saving the token and url, go on to text your bot
 
 ### Using Replit
 
-Log into your account, create a python repl. Download `main.py` from [Whatsapp bot using sarufi API and heyoo](https://github.com/jovyinny/whatsap-bot-using-sarufi-api-and-heyoo.git).
+Log into your [Replit](https://replit.com/) account, create a python repl. Download `main.py` from [Whatsapp bot using sarufi API and heyoo](https://replit.com/@jovyinny/Whatapp-bot-using-Sarufi-api-and-heyoo).
 
 Upload/copy `main.py` code into your replit repl created.  In your repl, navigate to Tools --> packages, then install `heyoo`.
 
 Navigate to Tools--> Secrets to create environment variables. Read [Getting whatsapp creds](#whatsapp-cloud-creds)
 
 Create
-
-  `phone_number_id`--> to store whatsapp cloud phone ID
-  
-  `whatsapp_token` --> Your whatsapp token
-  
-  `username` --> Your sarufi username
-  
-  `password`--> sarufi password
-  
-  `bot_id`--> Your sarufi bot id
+  |Secrete key        | Description|
+  |:---               |:---        |
+  |`phone_number_id`  | Whatsapp cloud phone ID|
+  |`whatsapp_token`   | Your whatsapp token|
+  |`username`         | Your sarufi username|
+  |`password`         | sarufi password|
+  |`bot_id`           | Your sarufi bot id|
 
 After creating the secret keys, run your `main.py`. A small webview window will open up with a url that looks like `https://{your repl name}.{your replit usermae}.repl.co`. 
 
@@ -91,11 +92,18 @@ After copying the url, follow simple steps at [Setting whatsapp webhook](#settin
 
 Go into your repl, copy the `VERIFY_TOKEN` --> paste into verify token in your whatsapp cloud --> **verify and save**
 
-When done with saving the token and url, go on to text your bot
+We are reaching at a good point with the set-up. Lets [subscribe to message topic](#webhook-field-subscription).
+When done ,you are good to go... fire up your bot in whatsapp by sending text.
 
 ## Setting whatsapp webhook
 Navigate to your whatsapp cloud account --> `configuration` --> edit --> then paste the url into callback url. 
 ![Web hook setup](./img/webhook_setup.png)
+
+## Webhook field subscription
+
+After veryfing and saving whatsapp webook, navigate to webhook fields --> click `manage` to subscribe to `message` topic.
+
+![Webhook fields subscription](./img/webhook_subscription.png)
 
 ## Issues
 
