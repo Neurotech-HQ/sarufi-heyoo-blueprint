@@ -4,7 +4,7 @@
 
 Starter code to integrating sarufi with [heyoo](https://github.com/Neurotech-HQ/heyoo)
 
-A blueprint for deploying sarufi chabot on WhatsApp Cloud API. In this blueprint, we shall set up a webhook to receive whatsapp messages. The are several ways you can set up a webhook. I will be using [ngrok](https://ngrok.com/) and [Replit](https://replit.com/)
+A blueprint for deploying sarufi chabot on WhatsApp Cloud API. In this blueprint, we shall set up a webhook to receive whatsapp messages. The are several ways you can set up a webhook. I will be showing how to use [ngrok](https://ngrok.com/) and [Replit](https://replit.com/)
 
 ## Requirements
 
@@ -15,12 +15,10 @@ git clone https://github.com/Neurotech-HQ/sarufi-python-sdk
 cd sarufi-python-sdk
 sarufi-python-sdk $ python setup.py install
 ```
-
+**NOTE:** With replit, you do not need to install sarufi sdk in your machine. You need replit accout
 ## YAML CONFIGURATION
 
-Configure yaml to resemble your project details and whatsapp cloud API keys.
-Navigate to *Getting started* to get whatsApp cloud `token` and `phone number ID` to be used in the configuration file.
-![How to get whatsapp token and phone number ID](./img/get_whatsapp_token.png)
+Configure yaml to resemble your project details and whatsapp cloud API keys. Read [Getting whatsapp creds](#whatsapp-cloud-creds)
 
 ```YAML
 sarufi:
@@ -33,51 +31,71 @@ whatsapp:
   phone_number_id: whatsapp_phone_number_id
 ```
 
-## LAUNCH
+### Whatsapp cloud creds
 
-Once you have configured your YAML file, now you are ready to launch your whatsapp bot.
+Navigate to `Whatsapp`-->`Getting started` to get whatsApp cloud `token` and `phone number ID` to be used. You will have access token and phone number id
 
+![How to get whatsapp token and phone number ID](./img/get_whatsapp_token.png)
+
+
+
+## SETTING WEBHOOK
+
+### Using ngrok
+
+Make sure you have installed in your working machine.
+
+Once you have configured your YAML file, now you are ready to launch your whatsapp bot
 ```bash
 python3 app.py
 ```
-
-## Setting Webhook
-
-### using ngrok
-
-Make sure you have installed in your working machine. run
+Then run the command below to start ngrok
 
 ```bash
 ./ngrok http 5000
 ```
 
 **Note:** keep the port number the same as used in `app.py`
+
 After ruuning the command, you will have to copy the url ngrok provides. The url looks like `https://xxxxxxxxxxx.ngrok.io`
 
-With the provided url, go to your whatsapp cloud --> `configuration` --> edit --> then paste the url into callback url.
+With the provided url, follow simple steps at [Setting whatsapp webhook](#setting-whatsapp-webhook)
+
 Open `app.py`, copy the `VERIFY_TOKEN`--> paste into verify token in your whatsapp cloud --> **verify and save**
 
 When done with saving the token and url, go on to text your bot
 
-### using Replit
+### Using Replit
 
 Log into your account, create a python repl. Download `main.py` from [Whatsapp bot using sarufi API and heyoo](https://github.com/jovyinny/whatsap-bot-using-sarufi-api-and-heyoo.git).
 
 Upload/copy `main.py` code into your replit repl created.  In your repl, navigate to Tools --> packages, then install `heyoo`.
-Navigate to Tools--> Secrets to create environment variables.
+
+Navigate to Tools--> Secrets to create environment variables. Read [Getting whatsapp creds](#whatsapp-cloud-creds)
+
 Create
+
   `phone_number_id`--> to store whatsapp cloud phone ID
+  
   `whatsapp_token` --> Your whatsapp token
+  
   `username` --> Your sarufi username
+  
   `password`--> sarufi password
+  
   `bot_id`--> Your sarufi bot id
 
-After creating the secret keys, run your `main.py`. A small webview window will open up with a url that looks like `https://{your repl name}.{your replit usermae}.repl.co`.
+After creating the secret keys, run your `main.py`. A small webview window will open up with a url that looks like `https://{your repl name}.{your replit usermae}.repl.co`. 
 
-Copy the url, the navigate to your whatsapp cloud account --> `configuration` --> edit --> then paste the url into callback url. Go into your repl, copy the `VERIFY_TOKEN` --> paste into verify token in your whatsapp cloud --> **verify and save**
+After copying the url, follow simple steps at [Setting whatsapp webhook](#setting-whatsapp-webhook)
 
-![Web hook setup](./img/webhook_setup.png)
+Go into your repl, copy the `VERIFY_TOKEN` --> paste into verify token in your whatsapp cloud --> **verify and save**
+
 When done with saving the token and url, go on to text your bot
+
+## Setting whatsapp webhook
+Navigate to your whatsapp cloud account --> `configuration` --> edit --> then paste the url into callback url. 
+![Web hook setup](./img/webhook_setup.png)
 
 ## Issues
 
