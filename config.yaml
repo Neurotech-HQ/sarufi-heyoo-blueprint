@@ -1,8 +1,0 @@
-sarufi:
-  username: sarufi_username
-  password: sarufi_password
-  bot_id: sarufi_bot_id
-
-whatsapp:
-  token: whatsapp_token
-  phone_number_id: whatsapp_phone_number_id
