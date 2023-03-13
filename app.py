@@ -1,5 +1,4 @@
 import os
-import yaml
 import logging
 from sarufi import Sarufi
 from heyoo import WhatsApp
@@ -10,13 +9,12 @@ from flask import Flask, request, make_response
 app = Flask(__name__)
 
 # Load .env file
-load_dotenv()
-creds = yaml.safe_load(open("config.yaml"))
+load_dotenv(".env")
 messenger = WhatsApp(
-    creds["whatsapp"]["token"], phone_number_id=creds["whatsapp"]["phone_number_id"]
+    os.environ["whatsapp_token"], phone_number_id=os.environ["phone_number_id"]
 )
-sarufi = Sarufi(creds["sarufi"]["username"], creds["sarufi"]["password"])
-chatbot = sarufi.get_bot(creds["sarufi"]["bot_id"])
+sarufi = Sarufi(os.environ["sarufi_username"], os.environ["sarufi_password"])
+chatbot = sarufi.get_bot(os.environ["sarufi_bot_id"])
 
 VERIFY_TOKEN = "30cca545-3838-48b2-80a7-9e43b1ae8ce4"
 
