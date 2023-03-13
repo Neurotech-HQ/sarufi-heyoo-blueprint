@@ -26,6 +26,37 @@ logging.basicConfig(
 )
 
 
+def execute_actions(actions: dict, mobile: str):
+    if actions.get("actions"):
+        actions = actions["actions"]
+        for action in actions:
+            if action.get("send_message"):
+                message = action.get("send_message")
+                if isinstance(message, list):
+                    message = "\n".join(message)
+                messenger.send_message(message=message, recipient_id=mobile)
+            if action.get("send_reply_button"):
+                reply_button = action.get("send_reply_button")
+                messenger.send_reply_button(button=reply_button, recipient_id=mobile)
+            if action.get("send_button"):
+                messenger.send_button(
+                    button=action.get("send_button"), recipient_id=mobile
+                )
+
+
+def respond(mobile: str, message: str, message_type: str = "text"):
+    """
+    Send message to user
+    """
+    response = sarufi.chat(
+        bot_id=creds["sarufi"]["bot_id"],
+        chat_id=mobile,
+        message=message,
+        message_type=message_type,
+        channel="whatsapp",
+    )
+    execute_actions(actions=response, mobile=mobile)
+
 @app.route("/", methods=["GET", "POST"])
 def hook():
     if request.method == "GET":
@@ -54,8 +85,11 @@ def hook():
                 message = messenger.get_message(data)
                 name = messenger.get_name(data)
                 logging.info("Message: %s", message)
-                response = "\n".join(chatbot.respond(message=message, chat_id=mobile))
-                messenger.send_message(response, mobile)
+                respond(
+                    message=message,
+                    message_type=message_type,
+                    mobile=mobile,
+                )
 
             elif message_type == "interactive":
                 message_response = messenger.get_interactive_response(data)
@@ -63,12 +97,22 @@ def hook():
                 message_id = message_response[intractive_type]["id"]
                 message_text = message_response[intractive_type]["title"]
                 logging.info(f"Interactive Message; {message_id}: {message_text}")
+                respond(
+                    message=message_id,
+                    message_type=message_type,
+                    mobile=mobile,
+                )
 
             elif message_type == "location":
                 message_location = messenger.get_location(data)
                 message_latitude = message_location["latitude"]
                 message_longitude = message_location["longitude"]
                 logging.info("Location: %s, %s", message_latitude, message_longitude)
+                respond(
+                    message=message,
+                    message_type=message_type,
+                    mobile=mobile,
+                )
 
             elif message_type == "image":
                 image = messenger.get_image(data)
@@ -77,6 +121,11 @@ def hook():
                 image_filename = messenger.download_media(image_url, mime_type)
                 print(f"{mobile} sent image {image_filename}")
                 logging.info(f"{mobile} sent image {image_filename}")
+                respond(
+                    message=message,
+                    message_type=message_type,
+                    mobile=mobile,
+                )
 
             elif message_type == "video":
                 video = messenger.get_video(data)
@@ -85,6 +134,11 @@ def hook():
                 video_filename = messenger.download_media(video_url, mime_type)
                 print(f"{mobile} sent video {video_filename}")
                 logging.info(f"{mobile} sent video {video_filename}")
+                respond(
+                    message=message,
+                    message_type=message_type,
+                    mobile=mobile,
+                )
 
             elif message_type == "audio":
                 audio = messenger.get_audio(data)
@@ -93,6 +147,11 @@ def hook():
                 audio_filename = messenger.download_media(audio_url, mime_type)
                 print(f"{mobile} sent audio {audio_filename}")
                 logging.info(f"{mobile} sent audio {audio_filename}")
+                respond(
+                    message=message,
+                    message_type=message_type,
+                    mobile=mobile,
+                )
 
             elif message_type == "file":
                 file = messenger.get_file(data)
