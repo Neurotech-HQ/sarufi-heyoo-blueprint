@@ -6,7 +6,6 @@ Starter code to integrating sarufi with [heyoo](https://github.com/Neurotech-HQ/
 
 A blueprint for deploying sarufi chabot on WhatsApp Cloud API. In this blueprint, we shall set up a webhook to receive whatsapp messages. The are several ways you can set up a webhook. I will be showing how to use [ngrok](#using-ngrok) and [Replit](#using-replit).
 
-
 ## USING NGROK
 
 Make sure you have [ngrok](https://ngrok.com/) installed in your working machine.
@@ -14,24 +13,26 @@ Make sure you have [ngrok](https://ngrok.com/) installed in your working machine
 ### Quick setup
 
 Have [sarufi package](https://github.com/Neurotech-HQ/sarufi-python-sdk) installed on your machine before launching your whatsapp bot.
-- Lets Make a project folder named `whatsapp-bot` then create virtual evironment `whatsapp-bot-env` to hold our package. 
+
+- Make Project folder
+  Lets Make a project folder named `whatsapp-bot`. Navigate into it to create virtual evironment `whatsapp-bot-env`. Activate the environment and install sarufi.
 
   Run the command to make the magic happen
 
   ```bash
   mkdir whatsapp-bot
-  python -m venv whatsapp-bot-env
   cd whatsapp-bot
+  python -m venv whatsapp-bot-env
   source  whatsapp-bot-env/bin/activate
   pip3 install --upgrade sarufi
   ```
 
-- Create a file named '.env` in your working folder to hold environment variables by running. 
+- Create a file named '.env` in your working folder to hold environment variables by running.
   
-  ```
-  cd ..
+  ```bash
   touch .env
   ```
+
    In the file add the following. Read on how to [get whatsapp creds](#whatsapp-cloud-creds)
 
    ```bash
@@ -43,9 +44,11 @@ Have [sarufi package](https://github.com/Neurotech-HQ/sarufi-python-sdk) install
   ```
   
 - Once you have environment variables set, you are ready to fire 🚀 your `app.py` in activated virtual envirnoment.
+
   ```bash
   python3 app.py
   ```
+
   Then run the command below to start ngrok
 
   ```bash
@@ -64,8 +67,6 @@ Have [sarufi package](https://github.com/Neurotech-HQ/sarufi-python-sdk) install
   When done ,you are good to go... fire up your bot in whatsapp by sending text.
 
   🏁 When done with saving the token and url, go on to text your bot.
-
-
 
 ## USING REPLIT
 
@@ -88,7 +89,7 @@ Have [sarufi package](https://github.com/Neurotech-HQ/sarufi-python-sdk) install
 
 - Run the script
   
-  After creating the secret keys, run your `main.py`. A small webview window will open up with a url that looks like `https://{your repl name}.{your replit usermae}.repl.co`. 
+  After creating the secret keys, run your `main.py`. A small webview window will open up with a url that looks like `https://{your repl name}.{your replit usermae}.repl.co`.
 
   With the url, follow simple steps at [Setting whatsapp webhook](#setting-whatsapp-webhook).
 
@@ -101,13 +102,14 @@ Have [sarufi package](https://github.com/Neurotech-HQ/sarufi-python-sdk) install
 
 ## Whatsapp cloud creds
 
-Navigate to `Whatsapp`-->`Getting started` to get whatsApp cloud `token` and `phone number ID` to be used. 
+Navigate to `Whatsapp`-->`Getting started` to get whatsApp cloud `token` and `phone number ID` to be used.
 
 You will have access token and phone number id.
 
 ![How to get whatsapp token and phone number ID](./img/get_whatsapp_token.png)
 
 ## Setting whatsapp webhook
+
 Navigate to your whatsapp cloud account --> `configuration` --> edit --> then paste the url into callback url.
   
 ![Web hook setup](./img/webhook_setup.png)

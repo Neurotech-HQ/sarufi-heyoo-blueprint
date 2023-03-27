@@ -23,23 +23,63 @@ logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
 
+# send media
+def send_medias(medias:dict,mobile:str ,type:str):
+  for media in medias:
+    link=media.get("link")
+    caption=media.get("caption")
+    if type=="images":
+       messenger.send_image(image=link,recipient_id=mobile,caption=caption )
+    elif type =="videos":
+      messenger.send_video(video=link,recipient_id=mobile,caption=caption)
+    elif type == "audios":
+      messenger.send_document(document=link,recipient_id=mobile,caption=caption)
+    elif type=="sticker":
+      messenger.send_sticker(sticker=link,recipient_id=mobile)
+    elif type=="documents":
+      messenger.send_document(document=link,recipient_id=mobile,caption=caption)
 
 def execute_actions(actions: dict, mobile: str):
     if actions.get("actions"):
         actions = actions["actions"]
         for action in actions:
+            
             if action.get("send_message"):
                 message = action.get("send_message")
                 if isinstance(message, list):
                     message = "\n".join(message)
                 messenger.send_message(message=message, recipient_id=mobile)
+
             if action.get("send_reply_button"):
                 reply_button = action.get("send_reply_button")
                 messenger.send_reply_button(button=reply_button, recipient_id=mobile)
+            
             if action.get("send_button"):
-                messenger.send_button(
-                    button=action.get("send_button"), recipient_id=mobile
-                )
+                button=action.get("send_button")
+                messenger.send_button(button=button, recipient_id=mobile)
+            
+            if action.get("send_images"):
+              images=action.get("send_images")
+              send_medias(images,mobile,"images")
+              
+            if action.get("send_videos"):
+              videos=action.get("send_videos")
+              send_medias(videos,mobile,"videos")
+
+            if action.get("send_audios"):
+              audios=action.get("send_audios")
+              send_medias(audios,mobile,"audios")
+
+            if action.get("send_documents"):
+              documents=action.get("send_documents")
+              send_medias(documents,mobile,"documents")
+
+
+            if action.get("send_stickers"):
+              stickers=action.get("send_stickers")
+              send_medias(stickers,mobile,"stickers")
+    
+    logging.info("No response")
 
 
 def respond(mobile: str, message: str, message_type: str = "text"):
@@ -47,7 +87,7 @@ def respond(mobile: str, message: str, message_type: str = "text"):
     Send message to user
     """
     response = sarufi.chat(
-        bot_id=creds["sarufi"]["bot_id"],
+        bot_id=os.environ["sarufi_bot_id"],
         chat_id=mobile,
         message=message,
         message_type=message_type,
