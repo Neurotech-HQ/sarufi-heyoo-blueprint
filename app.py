@@ -23,66 +23,8 @@ logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
 
-# send media
-def send_medias(medias:dict,mobile:str ,type:str):
-  for media in medias:
-    link=media.get("link")
-    caption=media.get("caption")
-    if type=="images":
-       messenger.send_image(image=link,recipient_id=mobile,caption=caption )
-    elif type =="videos":
-      messenger.send_video(video=link,recipient_id=mobile,caption=caption)
-    elif type == "audios":
-      messenger.send_document(document=link,recipient_id=mobile,caption=caption)
-    elif type=="sticker":
-      messenger.send_sticker(sticker=link,recipient_id=mobile)
-    elif type=="documents":
-      messenger.send_document(document=link,recipient_id=mobile,caption=caption)
-
-def execute_actions(actions: dict, mobile: str):
-    if actions.get("actions"):
-        actions = actions["actions"]
-        for action in actions:
-            
-            if action.get("send_message"):
-                message = action.get("send_message")
-                if isinstance(message, list):
-                    message = "\n".join(message)
-                messenger.send_message(message=message, recipient_id=mobile)
-
-            if action.get("send_reply_button"):
-                reply_button = action.get("send_reply_button")
-                messenger.send_reply_button(button=reply_button, recipient_id=mobile)
-            
-            if action.get("send_button"):
-                button=action.get("send_button")
-                messenger.send_button(button=button, recipient_id=mobile)
-            
-            if action.get("send_images"):
-              images=action.get("send_images")
-              send_medias(images,mobile,"images")
-              
-            if action.get("send_videos"):
-              videos=action.get("send_videos")
-              send_medias(videos,mobile,"videos")
-
-            if action.get("send_audios"):
-              audios=action.get("send_audios")
-              send_medias(audios,mobile,"audios")
-
-            if action.get("send_documents"):
-              documents=action.get("send_documents")
-              send_medias(documents,mobile,"documents")
-
-
-            if action.get("send_stickers"):
-              stickers=action.get("send_stickers")
-              send_medias(stickers,mobile,"stickers")
-    
-    logging.info("No response")
-
-
-def respond(mobile: str, message: str, message_type: str = "text"):
+# FUNCTIONS
+def respond(mobile: str, message: str, message_type: str = "text")->None:
     """
     Send message to user
     """
@@ -95,6 +37,69 @@ def respond(mobile: str, message: str, message_type: str = "text"):
     )
     execute_actions(actions=response, mobile=mobile)
 
+
+def execute_actions(actions: dict, mobile: str)->None:
+    if actions.get("actions"):
+        actions = actions["actions"]
+        for action in actions:
+            
+            if action.get("send_message"):
+                message = action.get("send_message")
+                if isinstance(message, list):
+                    message = "\n".join(message)
+                messenger.send_message(message=message, recipient_id=mobile)
+
+            elif action.get("send_reply_button"):
+                reply_button = action.get("send_reply_button")
+                messenger.send_reply_button(button=reply_button, recipient_id=mobile)
+            
+            elif action.get("send_button"):
+                button=action.get("send_button")
+                messenger.send_button(button=button, recipient_id=mobile)
+            
+            elif action.get("send_images"):
+              images=action.get("send_images")
+              send_medias(images,mobile,"images")
+              
+            elif action.get("send_videos"):
+              videos=action.get("send_videos")
+              send_medias(videos,mobile,"videos")
+
+            elif action.get("send_audios"):
+              audios=action.get("send_audios")
+              send_medias(audios,mobile,"audios")
+
+            elif action.get("send_documents"):
+              documents=action.get("send_documents")
+              send_medias(documents,mobile,"documents")
+
+
+            elif action.get("send_stickers"):
+              stickers=action.get("send_stickers")
+              send_medias(stickers,mobile,"stickers")
+    
+    logging.info("No response")
+
+
+# send media
+def send_medias(medias:dict,mobile:str ,type:str)->None:
+  for media in medias:
+    link=media.get("link")
+    caption=media.get("caption")
+    if type=="images":
+       messenger.send_image(image=link,recipient_id=mobile,caption=caption )
+    elif type =="videos":
+      messenger.send_video(video=link,recipient_id=mobile,caption=caption)
+    elif type == "audios":
+      messenger.send_document(document=link,recipient_id=mobile,caption=caption)
+    elif type=="stickers":
+      messenger.send_sticker(sticker=link,recipient_id=mobile)
+    elif type=="documents":
+      messenger.send_document(document=link,recipient_id=mobile,caption=caption)
+    else:
+        logging.error("Unrecognized type")
+
+# WEBHOOK ROUTE
 @app.route("/", methods=["GET", "POST"])
 def hook():
     if request.method == "GET":
@@ -146,11 +151,6 @@ def hook():
                 message_latitude = message_location["latitude"]
                 message_longitude = message_location["longitude"]
                 logging.info("Location: %s, %s", message_latitude, message_longitude)
-                respond(
-                    message=message,
-                    message_type=message_type,
-                    mobile=mobile,
-                )
 
             elif message_type == "image":
                 image = messenger.get_image(data)
@@ -159,11 +159,6 @@ def hook():
                 image_filename = messenger.download_media(image_url, mime_type)
                 print(f"{mobile} sent image {image_filename}")
                 logging.info(f"{mobile} sent image {image_filename}")
-                respond(
-                    message=message,
-                    message_type=message_type,
-                    mobile=mobile,
-                )
 
             elif message_type == "video":
                 video = messenger.get_video(data)
@@ -172,11 +167,7 @@ def hook():
                 video_filename = messenger.download_media(video_url, mime_type)
                 print(f"{mobile} sent video {video_filename}")
                 logging.info(f"{mobile} sent video {video_filename}")
-                respond(
-                    message=message,
-                    message_type=message_type,
-                    mobile=mobile,
-                )
+
 
             elif message_type == "audio":
                 audio = messenger.get_audio(data)
@@ -185,11 +176,6 @@ def hook():
                 audio_filename = messenger.download_media(audio_url, mime_type)
                 print(f"{mobile} sent audio {audio_filename}")
                 logging.info(f"{mobile} sent audio {audio_filename}")
-                respond(
-                    message=message,
-                    message_type=message_type,
-                    mobile=mobile,
-                )
 
             elif message_type == "file":
                 file = messenger.get_file(data)
