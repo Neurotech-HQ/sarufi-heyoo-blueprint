@@ -27,13 +27,9 @@ Have [sarufi package](https://github.com/Neurotech-HQ/sarufi-python-sdk) install
   pip3 install --upgrade sarufi
   ```
 
-- Create a file named '.env` in your working folder to hold environment variables by running.
-  
-  ```bash
-  touch .env
-  ```
+- Create a file named '.env` in your working folder to hold environment variables using your text editor.
 
-   In the file add the following. Read on how to [get whatsapp creds](#whatsapp-cloud-creds)
+  In the file add the following. Read on how to [get whatsapp creds](#whatsapp-cloud-creds)
 
    ```bash
     sarufi_username = Your sarufi username
@@ -42,7 +38,7 @@ Have [sarufi package](https://github.com/Neurotech-HQ/sarufi-python-sdk) install
     whatsapp_token  = Your Whatsapp token
     phone_number_id = whatsapp phone number id
   ```
-  
+
 - Once you have environment variables set, you are ready to fire 🚀 your `app.py` in activated virtual envirnoment.
 
   ```bash

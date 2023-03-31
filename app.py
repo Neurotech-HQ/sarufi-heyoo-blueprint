@@ -40,7 +40,7 @@ def respond(mobile: str, message: str, message_type: str = "text")->None:
 
 def execute_actions(actions: dict, mobile: str)->None:
     if actions.get("actions"):
-        actions = actions["actions"]
+        actions = reversed(actions.get("actions"))
         for action in actions:
             
             if action.get("send_message"):
