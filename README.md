@@ -75,7 +75,7 @@ Have [sarufi package](https://github.com/Neurotech-HQ/sarufi-python-sdk) install
 
 - Log into your [Replit](https://replit.com/) account.
   
-  Create a python repl. Download `main.py` from [Whatsapp bot using sarufi API and heyoo](https://replit.com/@neurotechafrica/sarufi-heyoo-blueprint).
+  Create a python repl. Download `main.py` from [Whatsapp bot using sarufi API and heyoo](https://replit.com/@jovyinny/Whatapp-bot-using-Sarufi-api-and-heyoo).
 
   Upload/copy `main.py` code into your replit repl created.  In your repl, navigate to Tools --> packages, then install `heyoo`.
 
