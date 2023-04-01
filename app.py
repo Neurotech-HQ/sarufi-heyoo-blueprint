@@ -42,7 +42,22 @@ def execute_actions(actions: dict, mobile: str)->None:
     if actions.get("actions"):
         actions = reversed(actions.get("actions"))
         for action in actions:
-            if action.get("send_images"):
+            
+            if action.get("send_message"):
+                message = action.get("send_message")
+                if isinstance(message, list):
+                    message = "\n".join(message)
+                messenger.send_message(message=message, recipient_id=mobile)
+
+            elif action.get("send_reply_button"):
+                reply_button = action.get("send_reply_button")
+                messenger.send_reply_button(button=reply_button, recipient_id=mobile)
+            
+            elif action.get("send_button"):
+                button=action.get("send_button")
+                messenger.send_button(button=button, recipient_id=mobile)
+            
+            elif action.get("send_images"):
               images=action.get("send_images")
               send_medias(images,mobile,"images")
               
@@ -62,20 +77,6 @@ def execute_actions(actions: dict, mobile: str)->None:
             elif action.get("send_stickers"):
               stickers=action.get("send_stickers")
               send_medias(stickers,mobile,"stickers")
-            
-            elif action.get("send_message"):
-                message = action.get("send_message")
-                if isinstance(message, list):
-                    message = "\n".join(message)
-                messenger.send_message(message=message, recipient_id=mobile)
-
-            elif action.get("send_reply_button"):
-                reply_button = action.get("send_reply_button")
-                messenger.send_reply_button(button=reply_button, recipient_id=mobile)
-
-            elif action.get("send_button"):
-                button=action.get("send_button")
-                messenger.send_button(button=button, recipient_id=mobile)
     
     logging.info("No response")
 
