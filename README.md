@@ -19,12 +19,19 @@ Have [sarufi package](https://github.com/Neurotech-HQ/sarufi-python-sdk) install
 
   Run the command to make the magic happen
 
-  ```bash
+    ```bash
   mkdir whatsapp-bot
   cd whatsapp-bot
   python -m venv whatsapp-bot-env
   source  whatsapp-bot-env/bin/activate
-  pip3 install --upgrade sarufi
+  ```
+
+- Clone blueprint and install packages
+
+  ```bash
+  git clone https://github.com/Neurotech-HQ/sarufi-heyoo-blueprint.git
+  cd telegram-chatbot-blueprint
+  pip3 install -r requirements.txt
   ```
 
 - Create a file named '.env` in your working folder to hold environment variables using your text editor.
@@ -68,7 +75,7 @@ Have [sarufi package](https://github.com/Neurotech-HQ/sarufi-python-sdk) install
 
 - Log into your [Replit](https://replit.com/) account.
   
-  Create a python repl. Download `main.py` from [Whatsapp bot using sarufi API and heyoo](https://replit.com/@jovyinny/Whatapp-bot-using-Sarufi-api-and-heyoo).
+  Create a python repl. Download `main.py` from [Whatsapp bot using sarufi API and heyoo](https://replit.com/@neurotechafrica/sarufi-heyoo-blueprint).
 
   Upload/copy `main.py` code into your replit repl created.  In your repl, navigate to Tools --> packages, then install `heyoo`.
 
