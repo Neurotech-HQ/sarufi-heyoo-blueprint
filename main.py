@@ -13,7 +13,7 @@ load_dotenv(".env")
 messenger = WhatsApp(
     os.environ["whatsapp_token"], phone_number_id=os.environ["phone_number_id"]
 )
-sarufi = Sarufi(os.environ["sarufi_username"], os.environ["sarufi_password"])
+sarufi = Sarufi(client_id=os.environ["sarufi_client_id"], client_secret=os.environ["sarufi_client_secret"])
 chatbot = sarufi.get_bot(os.environ["sarufi_bot_id"])
 
 VERIFY_TOKEN = "30cca545-3838-48b2-80a7-9e43b1ae8ce4"
