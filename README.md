@@ -75,7 +75,7 @@ Have [sarufi package](https://github.com/Neurotech-HQ/sarufi-python-sdk) install
   We are heading a the best part of this journey. Just take time to [subscribe to message topic](#webhook-field-subscription).
   When done ,you are good to go... fire up your bot in whatsapp by sending text.
 
-  🏁 When done with saving the token and url, go on to text your bot.
+  🏁 When done with saving the token and url, go on to text your bot. Check out the sample [below](#sample-bot-test)
 
 ## USING REPLIT
 
@@ -121,7 +121,7 @@ You will have access token and phone number id.
 
 To authorize our chabot, we are are going to use authorization keys from sarufi. Log in into your [sarufi account](https://sarufi.io). Go to your Profile on account to get Authorization keys
 
-![Sarufi authorazation keys](/img/sarufi_authorization.png)
+![Sarufi authorazation keys](./img/sarufi_authorization.png)
 
 ## Setting whatsapp webhook
 
@@ -134,6 +134,11 @@ Navigate to your whatsapp cloud account --> `configuration` --> edit --> then pa
 After veryfing and saving whatsapp webook, navigate to webhook fields --> click `manage` to subscribe to `message` topic.
 
 ![Webhook fields subscription](./img/webhook_subscription.png)
+
+## Sample Bot test
+
+With a bot deployed in Whatsapp, here is a sample of a pizza bot.
+![Bot deployed in whatsapp](./img/sample.gif)
 
 ## Issues
 
