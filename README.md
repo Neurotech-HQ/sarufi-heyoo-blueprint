@@ -34,9 +34,11 @@ Have [sarufi package](https://github.com/Neurotech-HQ/sarufi-python-sdk) install
   pip3 install -r requirements.txt
   ```
 
-- Create a file named '.env` in your working folder to hold environment variables using your text editor.
+- Create a file named '.env`.
+  
+  In your working folder, create `.env` file to hold environment variables using your text editor.
 
-  In the file add the following. Read on how to [get whatsapp credentials](#whatsapp-cloud-creds) and how to [get sarufi credentials](#getting-sarufi-credentials)
+  With the file created, add the following credentials. Read on how to [get whatsapp credentials](#whatsapp-cloud-creds) and how to [get sarufi credentials](#getting-sarufi-credentials)
 
   ```bash
    sarufi_client_id = Your sarufi client ID
@@ -48,11 +50,13 @@ Have [sarufi package](https://github.com/Neurotech-HQ/sarufi-python-sdk) install
 
 - Once you have environment variables set, you are ready to fire 🚀 your `app.py` in activated virtual envirnoment.
 
+  1. Fire up your python script
+  
   ```bash
   python3 main.py
   ```
-
-  Then run the command below to start ngrok
+  
+  2. Start ngrok
 
   ```bash
   ./ngrok http 5000
@@ -60,7 +64,9 @@ Have [sarufi package](https://github.com/Neurotech-HQ/sarufi-python-sdk) install
 
   **`Note:`** keep the port number the same as used in `app.py`
 
-- Finish up. After ruuning the command, you will have to copy the url ngrok provides. The url looks like `https://xxxxxxxxxxx.ngrok.io`
+- Finish up.
+  
+  After running the command, you will have to copy the url ngrok provides. The url looks like `https://xxxxxxxxxxx.ngrok.io`
 
   With the provided url, follow simple steps at [Setting whatsapp webhook](#setting-whatsapp-webhook).
 
