@@ -48,7 +48,7 @@ Have [sarufi package](https://github.com/Neurotech-HQ/sarufi-python-sdk) install
    phone_number_id = whatsapp phone number id
   ```
 
-- Once you have environment variables set, you are ready to fire 🚀 your `app.py` in activated virtual envirnoment.
+- Once you have environment variables set, you are ready to fire 🚀 your `main.py` in activated virtual envirnoment.
 
   1. Fire up your python script
   
@@ -62,7 +62,7 @@ Have [sarufi package](https://github.com/Neurotech-HQ/sarufi-python-sdk) install
   ./ngrok http 5000
   ```
 
-  **`Note:`** keep the port number the same as used in `app.py`
+  **`Note:`** keep the port number the same as used in `main.py`
 
 - Finish up.
   
