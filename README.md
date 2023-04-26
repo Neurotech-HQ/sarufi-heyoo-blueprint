@@ -41,8 +41,7 @@ Have [sarufi package](https://github.com/Neurotech-HQ/sarufi-python-sdk) install
   With the file created, add the following credentials. Read on how to [get whatsapp credentials](#whatsapp-cloud-creds) and how to [get sarufi credentials](#getting-sarufi-credentials)
 
   ```bash
-   sarufi_client_id = Your sarufi client ID
-   sarufi_sarufi_secret = Your sarufi Client secret
+   sarufi_api_key = Your API KEY
    sarufi_bot_id   = Your Bot Id
    whatsapp_token  = Your Whatsapp token
    phone_number_id = whatsapp phone number id
@@ -92,8 +91,7 @@ Have [sarufi package](https://github.com/Neurotech-HQ/sarufi-python-sdk) install
   |:--- |:--- |
   |`phone_number_id` | Whatsapp cloud phone ID|
   |`whatsapp_token` | Your whatsapp token|
-  |`sarufi_client_id` | Your sarufi client ID|
-  |`sarufi_client_secret` | sarufi client secret|
+  |`sarufi_api_key` | Your sarufi API KEY|
   |`sarufi_bot_id` | Your sarufi bot id|
 
 - Run the script
