@@ -95,8 +95,6 @@ Have [sarufi package](https://github.com/Neurotech-HQ/sarufi-python-sdk) install
 
   Fork the repo [Whatsapp bot using sarufi API and heyoo](https://replit.com/@neurotechafrica/sarufi-heyoo-blueprint) into your account.
 
-  Upload/copy `main.py` code into your replit repl created. In your repl, navigate to Tools --> packages, then install `heyoo`.
-
   Navigate to `Tools`--> `Secrets` to create environment variables. We have discussed on how to get whatsapp cloud api at the introduction part where as for sarufi view instructions here [get sarufi credentials](#getting-sarufi-credentials).
 
   Create
