@@ -1,16 +1,29 @@
-<samp>
-
-# sarufi-heyoo-blueprint
+# sarufi heyoo blueprint
 
 Starter code to integrating sarufi with [heyoo](https://github.com/Neurotech-HQ/heyoo).
+This is a blueprint for deploying sarufi chabot on WhatsApp using WhatsApp Cloud API. In this blueprint, we shall set up a webhook to receive whatsapp messages. There are several ways you can set up a webhook. We shall be working on how to use [ngrok](#using-ngrok) and [Replit](#using-replit) in the deployment.
 
-A blueprint for deploying sarufi chabot on WhatsApp Cloud API. In this blueprint, we shall set up a webhook to receive whatsapp messages. The are several ways you can set up a webhook. I will be showing how to use [ngrok](#using-ngrok) and [Replit](#using-replit).
+## Whatsapp cloud account
 
-## USING NGROK
+To get started using this blueprint for your [sarufi bot](https://sarufi.io), you will need `TOKEN` and `TEST WHATSAPP NUMBER` obtained from [Facebook Developer Portal](https://developers.facebook.com/).
+
+Here are steps to follow for you to get started:
+
+- [Go to your apps](https://developers.facebook.com/apps)
+- [create an app](https://developers.facebook.com/apps/create/)
+- Select Business >> Business
+- It will prompt you to enter basic app informations
+- It will ask you to add products to your app. Add Whatsapp
+- Right there you will see a your TOKEN and TEST WHATSAPP NUMBER and its phone_number_id
+- Lastly verify the number you will be using for testing on the To field.
+
+## Deploying the bot
+
+### USING NGROK
 
 Make sure you have [ngrok](https://ngrok.com/) installed in your working machine.
 
-### Quick setup
+#### Quick setup
 
 Have [sarufi package](https://github.com/Neurotech-HQ/sarufi-python-sdk) installed on your machine before launching your whatsapp bot.
 
@@ -38,7 +51,7 @@ Have [sarufi package](https://github.com/Neurotech-HQ/sarufi-python-sdk) install
   
   In your working folder, create `.env` file to hold environment variables using your text editor.
 
-  With the file created, add the following credentials. Read on how to [get whatsapp credentials](#whatsapp-cloud-creds) and how to [get sarufi credentials](#getting-sarufi-credentials)
+  With the file created, add the following credentials. With whatsapp cloud api, instructions are at the top where as for sarufi, please read on how to [get sarufi credentials](#getting-sarufi-credentials)
 
   ```bash
    sarufi_api_key = Your API KEY
@@ -76,15 +89,15 @@ Have [sarufi package](https://github.com/Neurotech-HQ/sarufi-python-sdk) install
 
   🏁 When done with saving the token and url, go on to text your bot. Check out the sample [below](#sample-bot-test)
 
-## USING REPLIT
+### USING REPLIT
 
 - Log into your [Replit](https://replit.com/) account.
 
-  Create a python repl. Download `main.py` from [Whatsapp bot using sarufi API and heyoo](https://replit.com/@neurotechafrica/sarufi-heyoo-blueprint).
+  Fork the repo [Whatsapp bot using sarufi API and heyoo](https://replit.com/@neurotechafrica/sarufi-heyoo-blueprint) into your account.
 
   Upload/copy `main.py` code into your replit repl created. In your repl, navigate to Tools --> packages, then install `heyoo`.
 
-  Navigate to Tools--> Secrets to create environment variables. Read [Getting whatsapp credentials](#whatsapp-cloud-creds) and [get sarufi credentials](#getting-sarufi-credentials).
+  Navigate to `Tools`--> `Secrets` to create environment variables. We have discussed on how to get whatsapp cloud api at the introduction part where as for sarufi view instructions here [get sarufi credentials](#getting-sarufi-credentials).
 
   Create
   |Secrete key | Description|
@@ -106,14 +119,6 @@ Have [sarufi package](https://github.com/Neurotech-HQ/sarufi-python-sdk) install
 
   We are reaching at a good point with the set-up. Lets [subscribe to message topic](#webhook-field-subscription).
   When done ,you are good to go... fire 🚀 up your bot in whatsapp by sending text.
-
-## Whatsapp cloud creds
-
-Navigate to `Whatsapp`-->`Getting started` to get whatsApp cloud `token` and `phone number ID` to be used.
-
-You will have access token and phone number id.
-
-![How to get whatsapp token and phone number ID](./img/get_whatsapp_token.png)
 
 ## Getting Sarufi Credentials
 
@@ -153,5 +158,3 @@ All the credits to
 1. [kalebu](https://github.com/Kalebu/)
 2. [Jovine](https://github.com/jovyinny/)
 3. All other contributors
-
-</samp>
