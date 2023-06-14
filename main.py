@@ -11,10 +11,10 @@ app = Flask(__name__)
 # Load .env file
 load_dotenv(".env")
 messenger = WhatsApp(
-    os.environ["whatsapp_token"], phone_number_id=os.environ["phone_number_id"]
+    os.getenv("whatsapp_token"), phone_number_id=os.getenv("phone_number_id")
 )
-sarufi = Sarufi(api_key=os.environ['sarufi_api_key'])
-chatbot = sarufi.get_bot(os.environ["sarufi_bot_id"])
+sarufi = Sarufi(api_key=os.getenv('sarufi_api_key'))
+chatbot = sarufi.get_bot(os.getenv("sarufi_bot_id"))
 
 VERIFY_TOKEN = "30cca545-3838-48b2-80a7-9e43b1ae8ce4"
 
@@ -29,7 +29,7 @@ def respond(mobile: str, message: str, message_type: str = "text")->None:
     Send message to user
     """
     response = sarufi.chat(
-        bot_id=os.environ["sarufi_bot_id"],
+        bot_id=os.getenv("sarufi_bot_id"),
         chat_id=mobile,
         message=message,
         message_type=message_type,
