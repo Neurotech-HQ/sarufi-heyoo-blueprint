@@ -11,10 +11,10 @@ app = Flask(__name__)
 # Load .env file
 load_dotenv(".env")
 messenger = WhatsApp(
-    os.environ["whatsapp_token"], phone_number_id=os.environ["phone_number_id"]
+    os.getenv("whatsapp_token"), phone_number_id=os.getenv("phone_number_id")
 )
-sarufi = Sarufi(api_key=os.environ['sarufi_api_key'])
-chatbot = sarufi.get_bot(os.environ["sarufi_bot_id"])
+sarufi = Sarufi(api_key=os.getenv('sarufi_api_key'))
+chatbot = sarufi.get_bot(os.getenv("sarufi_bot_id"))
 
 VERIFY_TOKEN = "30cca545-3838-48b2-80a7-9e43b1ae8ce4"
 
@@ -28,15 +28,17 @@ def respond(mobile: str, message: str, message_type: str = "text")->None:
     """
     Send message to user
     """
-    response = sarufi.chat(
-        bot_id=os.environ["sarufi_bot_id"],
-        chat_id=mobile,
-        message=message,
-        message_type=message_type,
-        channel="whatsapp",
-    )
-    execute_actions(actions=response, mobile=mobile)
-
+    try:
+        response = sarufi.chat(
+            bot_id=os.getenv("sarufi_bot_id"),
+            chat_id=mobile,
+            message=message,
+            message_type=message_type,
+            channel="whatsapp",
+        )
+        execute_actions(actions=response, mobile=mobile)
+    except Exception as error:
+       logging.error("Error in respond function: %s", error)
 
 def execute_actions(actions: dict, mobile: str)->None:
     if actions.get("actions"):
@@ -116,7 +118,7 @@ def hook():
     logging.info("Received webhook data: %s", data)
     changed_field = messenger.changed_field(data)
     if changed_field == "messages":
-        new_message = messenger.get_mobile(data)
+        new_message = messenger.is_message(data)
         if new_message:
             mobile = messenger.get_mobile(data)
             name = messenger.get_name(data)
@@ -124,6 +126,10 @@ def hook():
             logging.info(
                 f"New Message; sender:{mobile} name:{name} type:{message_type}"
             )
+            # Mark message as read
+            message_id = messenger.get_message_id(data)
+            messenger.mark_as_read(message_id)
+
             if message_type == "text":
                 message = messenger.get_message(data)
                 name = messenger.get_name(data)
