@@ -28,15 +28,17 @@ def respond(mobile: str, message: str, message_type: str = "text")->None:
     """
     Send message to user
     """
-    response = sarufi.chat(
-        bot_id=os.getenv("sarufi_bot_id"),
-        chat_id=mobile,
-        message=message,
-        message_type=message_type,
-        channel="whatsapp",
-    )
-    execute_actions(actions=response, mobile=mobile)
-
+    try:
+        response = sarufi.chat(
+            bot_id=os.getenv("sarufi_bot_id"),
+            chat_id=mobile,
+            message=message,
+            message_type=message_type,
+            channel="whatsapp",
+        )
+        execute_actions(actions=response, mobile=mobile)
+    except Exception as error:
+       logging.error("Error in respond function: %s", error)
 
 def execute_actions(actions: dict, mobile: str)->None:
     if actions.get("actions"):
@@ -116,7 +118,7 @@ def hook():
     logging.info("Received webhook data: %s", data)
     changed_field = messenger.changed_field(data)
     if changed_field == "messages":
-        new_message = messenger.get_mobile(data)
+        new_message = messenger.is_message(data)
         if new_message:
             mobile = messenger.get_mobile(data)
             name = messenger.get_name(data)
@@ -124,6 +126,10 @@ def hook():
             logging.info(
                 f"New Message; sender:{mobile} name:{name} type:{message_type}"
             )
+            # Mark message as read
+            message_id = messenger.get_message_id(data)
+            messenger.mark_as_read(message_id)
+
             if message_type == "text":
                 message = messenger.get_message(data)
                 name = messenger.get_name(data)
