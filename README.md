@@ -43,7 +43,7 @@ Have [sarufi package](https://github.com/Neurotech-HQ/sarufi-python-sdk) install
 
   ```bash
   git clone https://github.com/Neurotech-HQ/sarufi-heyoo-blueprint.git
-  cd telegram-chatbot-blueprint
+  cd sarufi-heyoo-blueprint
   pip3 install -r requirements.txt
   ```
 
@@ -54,10 +54,10 @@ Have [sarufi package](https://github.com/Neurotech-HQ/sarufi-python-sdk) install
   With the file created, add the following credentials. With whatsapp cloud api, instructions are at the top where as for sarufi, please read on how to [get sarufi credentials](#getting-sarufi-credentials).
 
   ```bash
-   sarufi_api_key = Your API KEY
-   sarufi_bot_id   = Your Bot Id
-   whatsapp_token  = Your Whatsapp token
-   phone_number_id = whatsapp phone number id
+   SARUFI_API_KEY = Your API KEY
+   SARUFI_BOT_ID   = Your Bot Id
+   WHATSAPP_TOKEN  = Your Whatsapp token
+   PHONE_NUMBER_ID = whatsapp phone number id
   ```
 
 - Once you have environment variables set, you are ready to fire 🚀 your `main.py` in activated virtual envirnoment.
@@ -100,10 +100,10 @@ Have [sarufi package](https://github.com/Neurotech-HQ/sarufi-python-sdk) install
   Create
   |Secrete key | Description|
   |:--- |:--- |
-  |`phone_number_id` | Whatsapp cloud phone ID|
-  |`whatsapp_token` | Your whatsapp token|
-  |`sarufi_api_key` | Your sarufi API KEY|
-  |`sarufi_bot_id` | Your sarufi bot id|
+  |`PHONE_NUMBER_ID` | Whatsapp cloud phone ID|
+  |`WHATSAPP_TOKEN` | Your whatsapp token|
+  |`SARUFI_API_KEY` | Your sarufi API KEY|
+  |`SARUFI_BOT_ID` | Your sarufi bot id|
 
 - Run the script
 
@@ -124,9 +124,13 @@ To authorize our chabot, we are are going to use authorization keys from sarufi.
 
 ![Sarufi authorazation keys](./img/sarufi_authorization.png)
 
+For **Bot ID**, Navigate to settings(in your bot)>> copy `bot ID`.
+
 ## Setting whatsapp webhook
 
-Navigate to your whatsapp cloud account --> `configuration` --> edit --> then paste the url into callback url.
+Navigate to your whatsapp cloud account --> `configuration` -->(Webhook) edit --> then paste the url into callback url.
+
+For Verify token, open `main.py` copy the `VERIFY_TOKEN` --> paste into verify token in your whatsapp cloud --> **verify and save**.
 
 ![Web hook setup](./img/webhook_setup.png)
 
@@ -137,6 +141,14 @@ After veryfing and saving whatsapp webook, navigate to webhook fields --> click 
 ![Webhook fields subscription](./img/webhook_subscription.png)
 
 ## Sample Bot test
+
+Navigate to your whatsapp cloud account >> **API setup** >> scroll down to a field written `To`. Click manage phone number to add you phone number. Follow instructions till you finish
+
+Click **send message** to start testing your bot. You will receive a message from your test number which your will use in testing your bot.
+
+![Send Test Message to Your Number](/img/whatsapp-send-test-message.png)
+
+You can test WhatsApp by sending a message to your bot.
 
 With a bot deployed in Whatsapp, here is a sample of a pizza bot.
 ![Bot deployed in whatsapp](./img/sample.gif)
