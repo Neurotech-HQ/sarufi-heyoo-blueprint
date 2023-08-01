@@ -71,7 +71,7 @@ Have [sarufi package](https://github.com/Neurotech-HQ/sarufi-python-sdk) install
   2. Start ngrok
 
   ```bash
-  ./ngrok http 5000
+  ngrok http 5000
   ```
 
   **`Note:`** keep the port number the same as used in `main.py`.

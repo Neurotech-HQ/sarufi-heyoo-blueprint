@@ -1,15 +1,18 @@
 import os
+import uvicorn
 import logging
 from sarufi import Sarufi
 from heyoo import WhatsApp
 from dotenv import load_dotenv
-from flask import Flask, request, make_response
+from fastapi import FastAPI,Response, Request
 
-# Initialize Flask App
-app = Flask(__name__)
+# Initialize FastAPI App
+
+app = FastAPI()
 
 # Load .env file
 load_dotenv(".env")
+
 messenger = WhatsApp(
     os.getenv("WHATSAPP_TOKEN"), phone_number_id=os.getenv("PHONE_NUMBER_ID")
 )
@@ -39,6 +42,7 @@ def respond(mobile: str, message: str, message_type: str = "text")->None:
         execute_actions(actions=response, mobile=mobile)
     except Exception as error:
        logging.error("Error in respond function: %s", error)
+
 
 def execute_actions(actions: dict, mobile: str)->None:
     if actions.get("actions"):
@@ -102,21 +106,24 @@ def send_medias(medias:dict,mobile:str ,type:str)->None:
         logging.error("Unrecognized type")
 
 # WEBHOOK ROUTE
-@app.route("/", methods=["GET", "POST"])
-def hook():
-    if request.method == "GET":
-        if request.args.get("hub.verify_token") == VERIFY_TOKEN:
-            logging.info("Verified webhook")
-            response = make_response(request.args.get("hub.challenge"), 200)
-            response.mimetype = "text/plain"
-            return response
-        logging.error("Webhook Verification failed")
-        return "Invalid verification token"
+@app.get("/")
+async def wehbook_verification(request: Request):
+    if request.query_params.get("hub.verify_token") == VERIFY_TOKEN:
+        content=request.query_params.get("hub.challenge")
+        logging.info("Verified webhook")
+        return Response(content=content, media_type="text/plain", status_code=200)
+    
+    logging.error("Webhook Verification failed")
+    return "Invalid verification token"
+
+@app.post("/")
+async def webhook_handler(request: Request):
 
     # Handle Webhook Subscriptions
-    data = request.get_json()
-    logging.info("Received webhook data: %s", data)
+    data = await request.json()
+    # logging.info("Received webhook data: %s", data)
     changed_field = messenger.changed_field(data)
+
     if changed_field == "messages":
         new_message = messenger.is_message(data)
         if new_message:
@@ -163,7 +170,6 @@ def hook():
                 image_id, mime_type = image["id"], image["mime_type"]
                 image_url = messenger.query_media_url(image_id)
                 image_filename = messenger.download_media(image_url, mime_type)
-                print(f"{mobile} sent image {image_filename}")
                 logging.info(f"{mobile} sent image {image_filename}")
 
             elif message_type == "video":
@@ -171,7 +177,6 @@ def hook():
                 video_id, mime_type = video["id"], video["mime_type"]
                 video_url = messenger.query_media_url(video_id)
                 video_filename = messenger.download_media(video_url, mime_type)
-                print(f"{mobile} sent video {video_filename}")
                 logging.info(f"{mobile} sent video {video_filename}")
 
 
@@ -180,7 +185,6 @@ def hook():
                 audio_id, mime_type = audio["id"], audio["mime_type"]
                 audio_url = messenger.query_media_url(audio_id)
                 audio_filename = messenger.download_media(audio_url, mime_type)
-                print(f"{mobile} sent audio {audio_filename}")
                 logging.info(f"{mobile} sent audio {audio_filename}")
 
             elif message_type == "file":
@@ -188,19 +192,17 @@ def hook():
                 file_id, mime_type = file["id"], file["mime_type"]
                 file_url = messenger.query_media_url(file_id)
                 file_filename = messenger.download_media(file_url, mime_type)
-                print(f"{mobile} sent file {file_filename}")
                 logging.info(f"{mobile} sent file {file_filename}")
             else:
-                print(f"{mobile} sent {message_type} ")
-                print(data)
+                print(f"{mobile} sent {message_type}\n{data}")
         else:
             delivery = messenger.get_delivery(data)
             if delivery:
-                print(f"Message : {delivery}")
+                logging.info(f"Message : {delivery}")
             else:
-                print("No new message")
-    return "ok",200
+                logging.info("No new message")
+    return "OK",200
 
 
 if __name__ == "__main__":
-    app.run(port=5000, debug=True)
+    uvicorn.run("main:app",port=5000,reload=True)
