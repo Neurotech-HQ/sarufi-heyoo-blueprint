@@ -4,7 +4,7 @@ import logging
 from sarufi import Sarufi
 from heyoo import WhatsApp
 from dotenv import load_dotenv
-from fastapi import FastAPI,Response, Request
+from fastapi import FastAPI,Response, Request, BackgroundTasks
 
 # Initialize FastAPI App
 
@@ -117,7 +117,7 @@ async def wehbook_verification(request: Request):
     return "Invalid verification token"
 
 @app.post("/")
-async def webhook_handler(request: Request):
+async def webhook_handler(request: Request,tasks:BackgroundTasks):
 
     # Handle Webhook Subscriptions
     data = await request.json()
@@ -141,7 +141,8 @@ async def webhook_handler(request: Request):
                 message = messenger.get_message(data)
                 name = messenger.get_name(data)
                 logging.info("Message: %s", message)
-                respond(
+                # Background Task
+                tasks.add_task(respond,
                     message=message,
                     message_type=message_type,
                     mobile=mobile,
@@ -153,7 +154,8 @@ async def webhook_handler(request: Request):
                 message_id = message_response[intractive_type]["id"]
                 message_text = message_response[intractive_type]["title"]
                 logging.info(f"Interactive Message; {message_id}: {message_text}")
-                respond(
+                # Background Task
+                tasks.add_task(respond,
                     message=message_id,
                     message_type=message_type,
                     mobile=mobile,
