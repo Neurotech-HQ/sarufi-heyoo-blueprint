@@ -7,8 +7,11 @@ from dotenv import load_dotenv
 from fastapi import FastAPI,Response, Request
 
 # Initialize FastAPI App
+from mangum import Mangum
+
 
 app = FastAPI()
+handler = Mangum(app)
 
 # Load .env file
 load_dotenv(".env")
