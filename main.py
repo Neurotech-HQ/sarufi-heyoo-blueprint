@@ -4,7 +4,7 @@ import uvicorn
 from sarufi import Sarufi
 from heyoo import WhatsApp
 from dotenv import load_dotenv
-from fastapi import FastAPI,Response, Request
+from fastapi import FastAPI, Response, Request
 
 # Initialize FastAPI App
 from mangum import Mangum
@@ -30,7 +30,9 @@ logging.basicConfig(
 )
 
 # FUNCTIONS
-def respond(mobile: str, message: str, message_type: str = "text")->None:
+
+
+def respond(mobile: str, message: str, message_type: str = "text") -> None:
     """
     Send message to user
     """
@@ -44,14 +46,15 @@ def respond(mobile: str, message: str, message_type: str = "text")->None:
         )
         execute_actions(actions=response, mobile=mobile)
     except Exception as error:
-       logging.error("Error in respond function: %s", error)
+        logging.error("Error in respond function: %s", error)
 
 
-def execute_actions(actions: dict, mobile: str)->None:
+def execute_actions(actions: dict, mobile: str) -> None:
+    print(actions)
     if actions.get("actions"):
         actions = reversed(actions.get("actions"))
         for action in actions:
-            
+
             if action.get("send_message"):
                 message = action.get("send_message")
                 if isinstance(message, list):
@@ -60,64 +63,71 @@ def execute_actions(actions: dict, mobile: str)->None:
 
             elif action.get("send_reply_button"):
                 reply_button = action.get("send_reply_button")
-                messenger.send_reply_button(button=reply_button, recipient_id=mobile)
-            
+                messenger.send_reply_button(
+                    button=reply_button, recipient_id=mobile)
+
             elif action.get("send_button"):
-                button=action.get("send_button")
+                button = action.get("send_button")
                 messenger.send_button(button=button, recipient_id=mobile)
-            
+
             elif action.get("send_images"):
-              images=action.get("send_images")
-              send_medias(images,mobile,"images")
-              
+                images = action.get("send_images")
+                send_medias(images, mobile, "images")
+
             elif action.get("send_videos"):
-              videos=action.get("send_videos")
-              send_medias(videos,mobile,"videos")
+                videos = action.get("send_videos")
+                send_medias(videos, mobile, "videos")
 
             elif action.get("send_audios"):
-              audios=action.get("send_audios")
-              send_medias(audios,mobile,"audios")
+                audios = action.get("send_audios")
+                send_medias(audios, mobile, "audios")
 
             elif action.get("send_documents"):
-              documents=action.get("send_documents")
-              send_medias(documents,mobile,"documents")
-
+                documents = action.get("send_documents")
+                send_medias(documents, mobile, "documents")
 
             elif action.get("send_stickers"):
-              stickers=action.get("send_stickers")
-              send_medias(stickers,mobile,"stickers")
-    
+                stickers = action.get("send_stickers")
+                send_medias(stickers, mobile, "stickers")
+
     logging.info("No response")
 
 
 # send media
-def send_medias(medias:dict,mobile:str ,type:str)->None:
-  for media in medias:
-    link=media.get("link")
-    caption=media.get("caption")
-    if type=="images":
-       messenger.send_image(image=link,recipient_id=mobile,caption=caption )
-    elif type =="videos":
-      messenger.send_video(video=link,recipient_id=mobile,caption=caption)
-    elif type == "audios":
-      messenger.send_document(document=link,recipient_id=mobile,caption=caption)
-    elif type=="stickers":
-      messenger.send_sticker(sticker=link,recipient_id=mobile)
-    elif type=="documents":
-      messenger.send_document(document=link,recipient_id=mobile,caption=caption)
-    else:
-        logging.error("Unrecognized type")
+def send_medias(medias: dict, mobile: str, type: str) -> None:
+    for media in medias:
+        link = media.get("link")
+        caption = media.get("caption")
+        if type == "images":
+            messenger.send_image(
+                image=link, recipient_id=mobile, caption=caption)
+        elif type == "videos":
+            messenger.send_video(
+                video=link, recipient_id=mobile, caption=caption)
+        elif type == "audios":
+            messenger.send_document(
+                document=link, recipient_id=mobile, caption=caption)
+        elif type == "stickers":
+            messenger.send_sticker(sticker=link, recipient_id=mobile)
+        elif type == "documents":
+            messenger.send_document(
+                document=link, recipient_id=mobile, caption=caption)
+        else:
+            logging.error("Unrecognized type")
 
 # WEBHOOK ROUTE
+
+
 @app.get("/")
 async def wehbook_verification(request: Request):
     if request.query_params.get("hub.verify_token") == VERIFY_TOKEN:
-        content=request.query_params.get("hub.challenge")
+        content = request.query_params.get("hub.challenge")
         logging.info("Verified webhook")
         return Response(content=content, media_type="text/plain", status_code=200)
-    
+
     logging.error("Webhook Verification failed")
     return "Invalid verification token"
+
 
 @app.post("/")
 async def webhook_handler(request: Request):
@@ -155,7 +165,8 @@ async def webhook_handler(request: Request):
                 intractive_type = message_response.get("type")
                 message_id = message_response[intractive_type]["id"]
                 message_text = message_response[intractive_type]["title"]
-                logging.info(f"Interactive Message; {message_id}: {message_text}")
+                logging.info(
+                    f"Interactive Message; {message_id}: {message_text}")
                 respond(
                     message=message_id,
                     message_type=message_type,
@@ -166,7 +177,8 @@ async def webhook_handler(request: Request):
                 message_location = messenger.get_location(data)
                 message_latitude = message_location["latitude"]
                 message_longitude = message_location["longitude"]
-                logging.info("Location: %s, %s", message_latitude, message_longitude)
+                logging.info("Location: %s, %s",
+                             message_latitude, message_longitude)
 
             elif message_type == "image":
                 image = messenger.get_image(data)
@@ -181,7 +193,6 @@ async def webhook_handler(request: Request):
                 video_url = messenger.query_media_url(video_id)
                 video_filename = messenger.download_media(video_url, mime_type)
                 logging.info(f"{mobile} sent video {video_filename}")
-
 
             elif message_type == "audio":
                 audio = messenger.get_audio(data)
@@ -204,8 +215,8 @@ async def webhook_handler(request: Request):
                 logging.info(f"Message : {delivery}")
             else:
                 logging.info("No new message")
-    return "OK",200
+    return "OK", 200
 
 
 if __name__ == "__main__":
-    uvicorn.run("main:app",port=5000,reload=True)
+    uvicorn.run("main:app", port=5000, reload=True)
