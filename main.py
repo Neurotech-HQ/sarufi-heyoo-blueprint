@@ -1,6 +1,6 @@
 import os
-import uvicorn
 import logging
+import uvicorn
 from sarufi import Sarufi
 from heyoo import WhatsApp
 from dotenv import load_dotenv
