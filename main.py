@@ -22,7 +22,7 @@ messenger = WhatsApp(
 sarufi = Sarufi(api_key=os.getenv('SARUFI_API_KEY'))
 chatbot = sarufi.get_bot(os.getenv("SARUFI_BOT_ID"))
 
-VERIFY_TOKEN = "30cca545-3838-48b2-80a7-9e43b1ae8ce4"
+VERIFY_TOKEN = os.getenv("VERIFY_TOKEN")
 
 # Logging
 logging.basicConfig(
