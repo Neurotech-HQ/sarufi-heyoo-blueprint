@@ -1,5 +1,5 @@
 fastapi==0.97.0
 heyoo==0.1.0
-python-dotenv==0.21.0
+python-dotenv==1.0.0
 sarufi==0.1.7
 uvicorn==0.22.0
