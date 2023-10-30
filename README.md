@@ -27,27 +27,46 @@ Make sure you have [ngrok](https://ngrok.com/) installed in your working machine
 
 Have [sarufi package](https://github.com/Neurotech-HQ/sarufi-python-sdk) installed on your machine before launching your whatsapp bot.
 
-- Make Project folder
-  Lets Make a project folder named `whatsapp-bot`. Navigate into it to create virtual evironment `whatsapp-bot-env`. Activate the environment and install sarufi.
+- Creae a project folder and virtual environment
 
-  Run the command to make the magic happen
+  Lets Make a project folder named `whatsapp-bot`. Navigate into it to create virtual evironment `whatsapp-bot-env`. Activate the environment. Run the command to make the magic 🔥 happen.
 
-  ```bash
-  mkdir whatsapp-bot
-  cd whatsapp-bot
-  python -m venv whatsapp-bot-env
-  source  whatsapp-bot-env/bin/activate
-  ```
+  - For unix based systems __[Linux and Mac]__
 
-- Clone blueprint and install packages
+    - Install virtual environment
 
-  ```bash
-  git clone https://github.com/Neurotech-HQ/sarufi-heyoo-blueprint.git
-  cd sarufi-heyoo-blueprint
-  pip3 install -r requirements.txt
-  ```
+      This step is optional as you may have python virtual environment already installed. If not, you can install it by running the command below.
 
-- Create a file named '.env`.
+      ```bash
+      sudo apt install python3-venv
+      ```
+    - Create project folder and virtual environment
+
+      ```bash
+      mkdir whatsapp-bot
+      cd whatsapp-bot
+      python3 -m venv whatsapp-bot-env
+      source  whatsapp-bot-env/bin/activate
+      ```
+  
+  - For windows
+
+    - Install virtual environment
+
+      This step is optional as you may have python virtual environment already installed. If not, you can install it by running the command below.
+
+      ```bash
+      pip install virtualenv
+      ```
+    - Create project folder and virtual environment
+
+      ```bash
+      mkdir whatsapp-bot
+      cd whatsapp-bot
+      python -m venv whatsapp-bot-env
+      whatsapp-bot-env\Scripts\activate.bat
+
+- Create a file named `.env`
   
   In your working folder, create `.env` file to hold environment variables using your text editor.
 
@@ -58,7 +77,10 @@ Have [sarufi package](https://github.com/Neurotech-HQ/sarufi-python-sdk) install
    SARUFI_BOT_ID   = Your Bot Id
    WHATSAPP_TOKEN  = Your Whatsapp token
    PHONE_NUMBER_ID = whatsapp phone number id
+   VERIFY_TOKEN    = Your verify token
   ```
+
+  **Note**: The verification token is a random string. You can just create a random string and use it as your verification token. It will be used to verify your webhook.
 
 - Once you have environment variables set, you are ready to fire 🚀 your `main.py` in activated virtual envirnoment.
 
@@ -71,7 +93,7 @@ Have [sarufi package](https://github.com/Neurotech-HQ/sarufi-python-sdk) install
   2. Start ngrok
 
   ```bash
-  ngrok http 5000
+  ngrok http 8000
   ```
 
   **`Note:`** keep the port number the same as used in `main.py`.
@@ -104,10 +126,11 @@ Have [sarufi package](https://github.com/Neurotech-HQ/sarufi-python-sdk) install
   |`WHATSAPP_TOKEN` | Your whatsapp token|
   |`SARUFI_API_KEY` | Your sarufi API KEY|
   |`SARUFI_BOT_ID` | Your sarufi bot id|
+  |`VERIFY_TOKEN` | Your verify token|
 
-- Run the script
+- Start the App
 
-  After creating the secret keys, run your `main.py`. A small webview window will open up with a url that looks like `https://{your repl name}.{your replit username}.repl.co`.
+  After creating the secret keys, click `Run` button. A small webview window will open up with a url that looks like `https://{your repl name}.{your replit username}.repl.co`.
 
   With the url, follow simple steps at [Setting whatsapp webhook](#setting-whatsapp-webhook).
 
@@ -124,7 +147,7 @@ To authorize our chabot, we are are going to use authorization keys from sarufi.
 
 ![Sarufi authorazation keys](./img/sarufi_authorization.png)
 
-For **Bot ID**, Navigate to settings(in your bot)>> copy `bot ID`.
+For **Bot ID**, Navigate to settings >> General(in your bot)>> copy `bot ID`.
 
 ## Setting whatsapp webhook
 
@@ -148,9 +171,8 @@ Click **send message** to start testing your bot. You will receive a message fro
 
 ![Send Test Message to Your Number](/img/whatsapp-send-test-message.png)
 
-You can test WhatsApp by sending a message to your bot.
+You can test WhatsApp by sending a message to your bot. With a bot deployed in Whatsapp, here is a sample of a pizza bot.
 
-With a bot deployed in Whatsapp, here is a sample of a pizza bot.
 ![Bot deployed in whatsapp](./img/sample.gif)
 
 ## Issues

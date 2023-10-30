@@ -4,7 +4,7 @@ import logging
 from sarufi import Sarufi
 from heyoo import WhatsApp
 from dotenv import load_dotenv
-from fastapi import FastAPI,Response, Request
+from fastapi import FastAPI,Response, Request, BackgroundTasks
 
 # Initialize FastAPI App
 
@@ -13,13 +13,27 @@ app = FastAPI()
 # Load .env file
 load_dotenv(".env")
 
+# Make sure all required environment variables are set
+if  os.getenv("WHATSAPP_TOKEN") is None:
+    raise ValueError("WHATSAPP_TOKEN not set")
+if  os.getenv("PHONE_NUMBER_ID") is None:
+    raise ValueError("PHONE_NUMBER_ID not set")
+if os.getenv("SARUFI_API_KEY") is None:
+    raise ValueError("SARUFI_API_KEY not set")
+if  os.getenv("SARUFI_BOT_ID") is None:
+    raise ValueError("SARUFI_BOT_ID not set")
+if os.getenv("VERIFY_TOKEN") is None:
+    raise ValueError("VERIFY_TOKEN not set")
+
+
 messenger = WhatsApp(
     os.getenv("WHATSAPP_TOKEN"), phone_number_id=os.getenv("PHONE_NUMBER_ID")
 )
 sarufi = Sarufi(api_key=os.getenv('SARUFI_API_KEY'))
 chatbot = sarufi.get_bot(os.getenv("SARUFI_BOT_ID"))
 
-VERIFY_TOKEN = "30cca545-3838-48b2-80a7-9e43b1ae8ce4"
+VERIFY_TOKEN = os.getenv("VERIFY_TOKEN")
+PORT=os.getenv("PORT",8000)
 
 # Logging
 logging.basicConfig(
@@ -117,7 +131,7 @@ async def wehbook_verification(request: Request):
     return "Invalid verification token"
 
 @app.post("/")
-async def webhook_handler(request: Request):
+async def webhook_handler(request: Request,tasks:BackgroundTasks):
 
     # Handle Webhook Subscriptions
     data = await request.json()
@@ -141,7 +155,8 @@ async def webhook_handler(request: Request):
                 message = messenger.get_message(data)
                 name = messenger.get_name(data)
                 logging.info("Message: %s", message)
-                respond(
+                # Background Task
+                tasks.add_task(respond,
                     message=message,
                     message_type=message_type,
                     mobile=mobile,
@@ -153,7 +168,8 @@ async def webhook_handler(request: Request):
                 message_id = message_response[intractive_type]["id"]
                 message_text = message_response[intractive_type]["title"]
                 logging.info(f"Interactive Message; {message_id}: {message_text}")
-                respond(
+                # Background Task
+                tasks.add_task(respond,
                     message=message_id,
                     message_type=message_type,
                     mobile=mobile,
@@ -205,4 +221,4 @@ async def webhook_handler(request: Request):
 
 
 if __name__ == "__main__":
-    uvicorn.run("main:app",port=5000,reload=True)
+    uvicorn.run("main:app",port=PORT)
