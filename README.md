@@ -29,7 +29,7 @@ Have [sarufi package](https://github.com/Neurotech-HQ/sarufi-python-sdk) install
 
 - Creae a project folder and virtual environment
 
-  Lets Make a project folder named `whatsapp-bot`. Navigate into it to create virtual evironment `whatsapp-bot-env`. Activate the environment. Run the command to make the magic 🔥 happen.
+  Lets Make a project folder named `whatsapp-bot`. Navigate into it to create virtual environment `whatsapp-bot-env` Activate the environment. Run the command to make the magic 🔥 happen.
 
   - For unix based systems __[Linux and Mac]__
 
@@ -73,7 +73,7 @@ Have [sarufi package](https://github.com/Neurotech-HQ/sarufi-python-sdk) install
   With the file created, add the following credentials. With whatsapp cloud api, instructions are at the top where as for sarufi, please read on how to [get sarufi credentials](#getting-sarufi-credentials).
 
   ```bash
-   SARUFI_API_KEY = Your API KEY
+   SARUFI_API_KEY  = Your API KEY
    SARUFI_BOT_ID   = Your Bot Id
    WHATSAPP_TOKEN  = Your Whatsapp token
    PHONE_NUMBER_ID = whatsapp phone number id
@@ -96,13 +96,13 @@ Have [sarufi package](https://github.com/Neurotech-HQ/sarufi-python-sdk) install
   ngrok http 8000
   ```
 
-  **`Note:`** keep the port number the same as used in `main.py`.
+  **`Note:`** keep the port number the same as used in `main.py`
 
 - Finish up.
   
-  After running the command, you will have to copy the url ngrok provides. The url looks like `https://xxxxxxxxxxx.ngrok.io`.
+  After running the command, you will have to copy the url ngrok provides. The url looks like `https://xxxxxxxxxxx.ngrok.io`
 
-  With the provided url, follow simple steps at [Setting whatsapp webhook](#setting-whatsapp-webhook).
+  With the provided url, follow simple steps at [Setting whatsapp webhook](#setting-whatsapp-webhook)
 
   Open `main.py`, copy the `VERIFY_TOKEN`--> paste into verify token in your whatsapp cloud --> **verify and save**.
 
@@ -132,7 +132,7 @@ Have [sarufi package](https://github.com/Neurotech-HQ/sarufi-python-sdk) install
 
   After creating the secret keys, click `Run` button. A small webview window will open up with a url that looks like `https://{your repl name}.{your replit username}.repl.co`.
 
-  With the url, follow simple steps at [Setting whatsapp webhook](#setting-whatsapp-webhook).
+  With the url, follow simple steps at [Setting whatsapp webhook](#setting-whatsapp-webhook)
 
 - Final touches
 
@@ -147,7 +147,7 @@ To authorize our chabot, we are are going to use authorization keys from sarufi.
 
 ![Sarufi authorazation keys](./img/sarufi_authorization.png)
 
-For **Bot ID**, Navigate to settings >> General(in your bot)>> copy `bot ID`.
+For **Bot ID**, Navigate to settings >> General(in your bot)>> copy `bot ID`
 
 ## Setting whatsapp webhook
 
@@ -181,7 +181,7 @@ If you will face any issue, please raise one so as we can fix it as soon as poss
 
 ## Contribution
 
-If there is something you would like to contribute, from typos to code to documentation, feel free to do so, `JUST FORK IT`.
+If there is something you would like to contribute, from typos to code to documentation, feel free to do so, `JUST FORK IT`
 
 ## Credits
 
